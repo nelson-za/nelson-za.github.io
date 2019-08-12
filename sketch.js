@@ -14,6 +14,8 @@ let currentPlayer;
 
 let currentPlayerD;
 
+let startText = 'Starting Player: ' + currentPlayer;
+
 function setup() {
 	createCanvas(900, 900);
 
@@ -28,9 +30,13 @@ function setup() {
 	}
 
 	currentPlayer = random(players);
+	startText = 'Starting Player: ' + currentPlayer;
+
+	let button = createButton('Reset').style('color', '#000').style('font-size', '16pt');
+	button.mousePressed(resetSketch);
 
 	console.log('Current Player: ' + currentPlayer);
-	currentPlayerD = createP('Starting Player: ' + currentPlayer).style('color', '#000').style('font-size', '32pt');
+	currentPlayerD = createP(startText).style('color', '#000').style('font-size', '32pt');
 }
 
 function draw() {
@@ -46,6 +52,31 @@ function draw() {
 			squares[i].show();
 		}
 	}
+}
+
+function resetSketch() {
+	// isWinner = false;
+	// squares = [];
+	// board = [ '', '', '', '', '', '', '', '', '' ];
+	// gameboard = [ [ '', '', '' ], [ '', '', '' ], [ '', '', '' ] ];
+	// totalMoves = 0;
+
+	// let squareSize = width / totalSquares;
+	// let index = 0;
+
+	// for (let j = 150; j < height; j += squareSize) {
+	// 	for (let i = 150; i < width; i += squareSize) {
+	// 		squares.push(new Square(i, j, squareSize, index));
+	// 		index++;
+	// 	}
+	// }
+
+	// currentPlayer = random(players);
+	// startText = 'Starting Player: ' + currentPlayer;
+
+	// currentPlayerD = null;
+
+	window.location.reload();
 }
 
 function updateGameboard() {
