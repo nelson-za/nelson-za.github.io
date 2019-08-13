@@ -27,7 +27,8 @@ let currentPlayerD;
 let startText = 'Starting Player: ' + currentPlayer;
 
 function setup() {
-	createCanvas(900, 900);
+	canvas = createCanvas(900, 900);
+	canvas.parent('game');
 
 	origBoard = [ '', '', '', '', '', '', '', '', '' ];
 	emptySpots = [];
