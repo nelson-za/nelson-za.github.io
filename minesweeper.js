@@ -11,6 +11,9 @@ let w = 30 * 2;
 // bombs 90
 let totalBombs = 99;
 
+let winCount = 30 * 16 - totalBombs;
+let revealedCount = 0;
+
 // 30 cols
 // 16 rows
 
@@ -60,15 +63,18 @@ function setup() {
 	button.mousePressed(resetSketch);
 
 	let revealSquare = createP('Left click to reveal sqaure!').style('color', '#000').style('font-size', '32pt');
-	let placeFlag = createP('Middle mouse to place of remove a flag!')
+	let placeFlag = createP('Middle mouse to place or remove a flag!')
 		.style('color', '#000')
 		.style('font-size', '32pt');
 
-	//console.log(totalBombs);
+	//console.log(winCount);
 }
 
 function draw() {
 	// logic
+	if (revealedCount === winCount) {
+		gameWon();
+	}
 
 	// draw
 	frameRate(60);
@@ -121,6 +127,18 @@ function gameOver() {
 		for (let j = 0; j < rows; j++) {
 			grid[i][j].revealed = true;
 			isGameOver = true;
+			revealedCount = 30 * 16;
+			noLoop();
+		}
+	}
+}
+
+function gameWon() {
+	for (let i = 0; i < cols; i++) {
+		for (let j = 0; j < rows; j++) {
+			grid[i][j].revealed = true;
+			isGameOver = true;
+			let gameHasBeenWon = createP('You have won!').style('color', '#000').style('font-size', '32pt');
 			noLoop();
 		}
 	}
@@ -213,6 +231,9 @@ class Cell {
 
 	reveal() {
 		this.revealed = true;
+		if (this.revealed && !this.bomb) {
+			revealedCount++;
+		}
 		if (this.neigborCount == 0) {
 			this.floodFill();
 		}
