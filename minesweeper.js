@@ -20,7 +20,7 @@ let revealedCount = 0;
 function setup() {
 	canvas = createCanvas(902 * 2, 482 * 2);
 	//canvas = createCanvas(902, 902);
-	canvas.parent('game');
+	canvas.parent('game').style('max-width', '100%').style('height', 'auto');
 
 	cols = floor(width / w);
 	rows = floor(height / w);
@@ -60,6 +60,7 @@ function setup() {
 	}
 
 	let button = createButton('Reset').style('color', '#000').style('font-size', '16pt');
+	button.parent('game').style('max-width', '100%').style('height', 'auto');
 	button.mousePressed(resetSketch);
 
 	let revealSquare = createP('Left click to reveal sqaure!').style('color', '#000').style('font-size', '32pt');
@@ -112,7 +113,7 @@ function mousePressed() {
 					if (!this.revealed) {
 						if (!grid[i][j].flagPlaced) {
 							grid[i][j].flagPlaced = true;
-						} else if (grid[i][j].flagPlaced) {
+						} else if (grid[i][j].flagPlaced == true) {
 							grid[i][j].flagPlaced = false;
 						}
 					}
@@ -213,12 +214,22 @@ class Cell {
 					rect(this.x, this.y, this.w, this.w);
 				}
 			}
+		} else if (!this.revealed) {
+			if (this.flagPlaced) {
+				fill(0, 150, 235);
+				ellipse(this.x + this.w * 0.5, this.y + this.w * 0.5, this.w * 0.5);
+			} else if (!this.flagPlaced) {
+				fill(255);
+				noStroke();
+				ellipse(this.x + this.w * 0.5, this.y + this.w * 0.5, this.w * 0.75);
+			}
 		}
-		if (this.flagPlaced && !this.revealed) {
-			fill(0, 150, 235);
-			//rect(this.x + this.w * 0.25, this.y + this.w * 0.25, this.w * 0.5, this.w * 0.5);
-			ellipse(this.x + this.w * 0.5, this.y + this.w * 0.5, this.w * 0.5);
-		}
+
+		// if (this.flagPlaced && !this.revealed) {
+		// 	fill(0, 150, 235);
+		// 	//rect(this.x + this.w * 0.25, this.y + this.w * 0.25, this.w * 0.5, this.w * 0.5);
+		// 	ellipse(this.x + this.w * 0.5, this.y + this.w * 0.5, this.w * 0.5);
+		// }
 	}
 
 	contains(x, y) {
